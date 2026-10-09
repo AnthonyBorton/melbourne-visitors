@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Build a beautiful one-day Melbourne itinerary through exceptional coffee, iconic landmarks and hidden laneways."
+    />
+    <title>One Fine Day — Melbourne</title>
+    <script>
+      (() => {
+        const param = new URLSearchParams(window.location.search).get("scoutTheme");
+        const theme =
+          param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Figtree:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="One Fine Day home">
+        <span class="brand-mark">M</span>
+        <span>ONE FINE DAY</span>
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="#discover">Discover</a>
+        <a href="#planner">Your day</a>
+        <a href="#map">Map</a>
+      </nav>
+      <button class="header-plan-button" type="button" data-scroll-to-planner>
+        Plan my day <span aria-hidden="true">↘</span>
+      </button>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <img
+          class="hero-image"
+          src="Assets/Flinders St Station.png"
+          alt="Flinders Street Station and a classic Melbourne tram at golden hour"
+        />
+        <div class="hero-shade"></div>
+        <div class="hero-content">
+          <p class="eyebrow light">A LOCAL'S GUIDE TO MELBOURNE</p>
+          <h1>One city.<br /><em>One perfect day.</em></h1>
+          <p class="hero-copy">
+            Coffee worth crossing town for, laneways made for wandering, and the landmarks that
+            make Melbourne unforgettable.
+          </p>
+          <div class="hero-actions">
+            <button class="primary-button" type="button" data-scroll-to-planner>
+              Build your day <span aria-hidden="true">→</span>
+            </button>
+            <a class="text-link light-link" href="#discover">Explore the highlights ↓</a>
+          </div>
+        </div>
+        <div class="hero-stamp" aria-hidden="true">
+          <span>MELBOURNE</span>
+          <strong>37.8136° S</strong>
+          <span>144.9631° E</span>
+        </div>
+        <p class="hero-caption">FLINDERS STREET STATION · SINCE 1854</p>
+      </section>
+
+      <section class="intro" id="discover">
+        <div>
+          <p class="eyebrow">THE MELBOURNE WAY</p>
+          <h2>The best days aren't rushed.<br /><em>They're well brewed.</em></h2>
+        </div>
+        <div class="intro-copy">
+          <p>
+            Melbourne rewards the curious. Start with an exceptional flat white, follow the scent
+            of fresh pastries through a hidden arcade, then let the city's trams and tree-lined
+            boulevards carry you somewhere memorable.
+          </p>
+          <p class="handwritten">We've mapped the magic. You make it yours.</p>
+        </div>
+      </section>
+
+      <section class="editorial-grid" aria-label="Melbourne highlights">
+        <article class="feature-card feature-laneways">
+          <img
+            src="Assets/Melbourne laneways.png"
+            alt="A vibrant Melbourne laneway filled with cafes, street art and local shops"
+          />
+          <div class="feature-overlay"></div>
+          <div class="feature-content">
+            <span>01 · WANDER</span>
+            <h3>Lose yourself<br />in the laneways</h3>
+            <p>Street art, tiny bars, independent boutiques and the city's best people-watching.</p>
+          </div>
+        </article>
+
+        <article class="quote-card">
+          <p class="quote-mark">“</p>
+          <blockquote>Melbourne is a city that reveals itself slowly — one coffee at a time.</blockquote>
+          <span>— A FRIEND WHO KNOWS</span>
+        </article>
+
+        <article class="feature-card feature-shrine">
+          <img
+            src="Assets/Shirne of remembrance.png"
+            alt="The Shrine of Remembrance against the Melbourne skyline at sunset"
+          />
+          <div class="feature-overlay"></div>
+          <div class="feature-content">
+            <span>02 · REFLECT</span>
+            <h3>A view worth<br />the climb</h3>
+            <p>Quiet grandeur, beautiful gardens and one of the finest city views in Melbourne.</p>
+          </div>
+        </article>
+      </section>
+
+      <section class="planner-section" id="planner">
+        <div class="planner-heading">
+          <div>
+            <p class="eyebrow">YOUR DAY, YOUR WAY</p>
+            <h2>Make Melbourne<br /><em>yours for the day.</em></h2>
+          </div>
+          <div class="planner-controls">
+            <label for="pace">Choose your pace</label>
+            <div class="segmented-control" id="pace" role="group" aria-label="Choose your pace">
+              <button type="button" data-pace="slow">Slow &amp; easy</button>
+              <button type="button" class="active" data-pace="balanced">The sweet spot</button>
+              <button type="button" data-pace="packed">See it all</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="planner-layout">
+          <div class="stops-panel">
+            <div class="panel-title">
+              <div>
+                <p class="eyebrow">CURATED STOPS</p>
+                <h3>Pick your favourites</h3>
+              </div>
+              <span id="selection-count">4 selected</span>
+            </div>
+            <div class="filter-row" role="group" aria-label="Filter stops">
+              <button class="filter-chip active" type="button" data-filter="all">All</button>
+              <button class="filter-chip" type="button" data-filter="coffee">Coffee</button>
+              <button class="filter-chip" type="button" data-filter="icon">Icons</button>
+              <button class="filter-chip" type="button" data-filter="culture">Culture</button>
+              <button class="filter-chip" type="button" data-filter="food">Food</button>
+            </div>
+            <div class="stop-list" id="stop-list"></div>
+          </div>
+
+          <aside class="itinerary-panel" aria-live="polite">
+            <div class="itinerary-top">
+              <div>
+                <p class="eyebrow">FRIDAY IN MELBOURNE</p>
+                <h3>Your perfect day</h3>
+              </div>
+              <button class="icon-button" type="button" id="reset-plan" aria-label="Reset itinerary">↻</button>
+            </div>
+            <div class="day-summary">
+              <span><strong id="summary-stops">4</strong> stops</span>
+              <span><strong id="summary-hours">7.5</strong> hours</span>
+              <span><strong id="summary-distance">5.1</strong> km</span>
+            </div>
+            <ol class="timeline" id="timeline"></ol>
+            <button class="primary-button full-width" type="button" data-scroll-to-map>
+              See it on the map <span aria-hidden="true">↘</span>
+            </button>
+          </aside>
+        </div>
+      </section>
+
+      <section class="map-section" id="map">
+        <div class="map-heading">
+          <div>
+            <p class="eyebrow">FROM FIRST SIP TO SUNSET</p>
+            <h2>Your Melbourne,<br /><em>mapped out.</em></h2>
+          </div>
+          <p>
+            Melbourne's compact centre is made for exploring on foot. When your legs need a break,
+            hop aboard the free City Circle Tram.
+          </p>
+        </div>
+        <div class="map-shell">
+          <div class="map-toolbar">
+            <span><i class="legend-dot selected-dot"></i>Your day</span>
+            <span><i class="legend-dot"></i>Other favourites</span>
+            <a
+              id="google-maps-link"
+              href="https://www.google.com/maps/dir/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Open in Google Maps ↗
+            </a>
+          </div>
+          <div class="map-canvas" id="map-canvas" aria-label="Map of selected Melbourne stops">
+            <svg class="map-art" viewBox="0 0 1000 540" role="img" aria-label="Stylised map of central Melbourne">
+              <defs>
+                <pattern id="grid" width="46" height="46" patternUnits="userSpaceOnUse" patternTransform="rotate(31)">
+                  <path d="M 46 0 L 0 0 0 46" class="map-grid-line" fill="none" />
+                </pattern>
+              </defs>
+              <rect width="1000" height="540" class="map-base" />
+              <rect width="1000" height="540" fill="url(#grid)" />
+              <path
+                d="M-20 360 C160 330 260 390 430 375 C610 359 690 296 1020 308 L1020 560 L-20 560 Z"
+                class="river"
+              />
+              <path d="M0 357 C170 330 260 389 430 374 C620 355 700 294 1000 309" class="river-line" />
+              <path d="M83 34 L846 520 M208 -20 L945 446 M0 147 L728 540 M373 -20 L1000 394" class="major-road" />
+              <path d="M33 258 L599 0 M233 540 L1000 190 M0 443 L897 34" class="minor-road" />
+              <text x="690" y="398" class="map-label">ROYAL BOTANIC GARDENS</text>
+              <text x="44" y="98" class="map-label">MELBOURNE CBD</text>
+              <text x="501" y="411" class="river-label">YARRA RIVER</text>
+            </svg>
+            <svg class="route-layer" id="route-layer" viewBox="0 0 1000 540" aria-hidden="true"></svg>
+            <div id="map-markers"></div>
+          </div>
+          <div class="map-bottom">
+            <p><strong>Local tip:</strong> Tap any pin to see why it made the list.</p>
+            <span id="map-route-summary">A relaxed 5.1 km route through the heart of Melbourne</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="closing">
+        <p class="eyebrow light">READY WHEN YOU ARE</p>
+        <h2>Melbourne's waiting.</h2>
+        <p>Wear comfortable shoes. Bring an appetite. Leave room for one more coffee.</p>
+        <button class="primary-button light-button" type="button" data-scroll-to-planner>
+          Plan your perfect day <span aria-hidden="true">↑</span>
+        </button>
+        <div class="closing-wordmark">MELBOURNE</div>
+      </section>
+    </main>
+
+    <footer>
+      <a class="brand" href="#top">
+        <span class="brand-mark">M</span>
+        <span>ONE FINE DAY</span>
+      </a>
+      <p>Made with care for good friends visiting a great city.</p>
+      <a href="#top">Back to top ↑</a>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
