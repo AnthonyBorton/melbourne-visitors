@@ -348,7 +348,7 @@ h2 {
 
 .handwritten {
   margin: 36px 0 0 24px;
-  color: var(--cp-accent);
+  color: var(--cp-link);
   font-family: "DM Serif Display", Georgia, serif;
   font-size: 22px;
   font-style: italic;
