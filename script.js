@@ -147,6 +147,26 @@ const timeline = document.querySelector("#timeline");
 const mapMarkers = document.querySelector("#map-markers");
 const routeLayer = document.querySelector("#route-layer");
 
+const themeToggle = document.querySelector("[data-theme-toggle]");
+const previewTheme = new URLSearchParams(window.location.search).get("scoutTheme");
+
+function updateThemeToggle() {
+  const isDark = document.documentElement.dataset.theme === "dark";
+  themeToggle.setAttribute("aria-label", `Switch to ${isDark ? "light" : "dark"} theme`);
+  themeToggle.innerHTML = `<span aria-hidden="true">${isDark ? "☀" : "☾"}</span>`;
+}
+
+themeToggle.addEventListener("click", () => {
+  const theme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", theme);
+  updateThemeToggle();
+  if (previewTheme !== "light" && previewTheme !== "dark") {
+    try {
+      window.localStorage.setItem("theme", theme);
+    } catch {}
+  }
+});
+
 function formatTime(totalMinutes) {
   const minutesInDay = totalMinutes % (24 * 60);
   const hour = Math.floor(minutesInDay / 60);
@@ -358,4 +378,5 @@ document.querySelector("[data-scroll-to-map]").addEventListener("click", () => {
   document.querySelector("#map").scrollIntoView({ behavior: "smooth" });
 });
 
+updateThemeToggle();
 render();
