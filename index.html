@@ -10,9 +10,19 @@
     <title>One Fine Day — Melbourne</title>
     <script>
       (() => {
-        const param = new URLSearchParams(window.location.search).get("scoutTheme");
-        const theme =
-          param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        const previewTheme = new URLSearchParams(window.location.search).get("scoutTheme");
+        const isValidTheme = (theme) => theme === "light" || theme === "dark";
+        let savedTheme = null;
+        try {
+          savedTheme = window.localStorage.getItem("theme");
+        } catch {}
+        const theme = isValidTheme(previewTheme)
+          ? previewTheme
+          : isValidTheme(savedTheme)
+            ? savedTheme
+            : window.matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light";
         document.documentElement.setAttribute("data-theme", theme);
       })();
     </script>
@@ -35,9 +45,14 @@
         <a href="#planner">Your day</a>
         <a href="#map">Map</a>
       </nav>
-      <button class="header-plan-button" type="button" data-scroll-to-planner>
-        Plan my day <span aria-hidden="true">↘</span>
-      </button>
+      <div class="header-actions">
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark theme">
+          <span aria-hidden="true">☾</span>
+        </button>
+        <button class="header-plan-button" type="button" data-scroll-to-planner>
+          Plan my day <span aria-hidden="true">↘</span>
+        </button>
+      </div>
     </header>
 
     <main id="top">

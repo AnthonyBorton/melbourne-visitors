@@ -4,6 +4,12 @@ A visually rich, interactive single-day planner for friends visiting Melbourne. 
 from local coffee shops, landmarks, cultural stops and food favourites, then see a timed itinerary
 and route on a stylised city map.
 
+## Themes
+
+The site follows your system color scheme by default. Use the sun/moon control in the header to
+choose light or dark mode; your choice is saved in this browser. To preview a theme without changing
+your saved choice, add `?scoutTheme=light` or `?scoutTheme=dark` to the page URL.
+
 ## Run locally
 
 The site has no build step. Serve the folder with any static web server:
