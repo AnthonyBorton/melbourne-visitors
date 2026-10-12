@@ -137,15 +137,56 @@ const paceSettings = {
   balanced: { gap: 30, multiplier: 1, label: "A relaxed" },
   packed: { gap: 20, multiplier: 0.82, label: "An energetic" },
 };
+const themes = new Set(["light", "dark"]);
+const themeStorageKey = "melbourne-theme";
+const colorSchemeQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
 let selectedIds = [...defaultSelection];
 let currentFilter = "all";
 let currentPace = "balanced";
 
+const root = document.documentElement;
+const themeToggle = document.querySelector("#theme-toggle");
 const stopList = document.querySelector("#stop-list");
 const timeline = document.querySelector("#timeline");
 const mapMarkers = document.querySelector("#map-markers");
 const routeLayer = document.querySelector("#route-layer");
+
+function updateThemeToggle() {
+  const currentTheme = root.dataset.theme === "dark" ? "dark" : "light";
+  const nextTheme = currentTheme === "dark" ? "light" : "dark";
+  const icon = nextTheme === "dark" ? "☾" : "☀";
+  const label = `Switch to ${nextTheme} theme`;
+
+  themeToggle.querySelector(".theme-icon").textContent = icon;
+  themeToggle.setAttribute("aria-label", label);
+  themeToggle.title = label;
+}
+
+function applyTheme(theme, source) {
+  if (!themes.has(theme)) return;
+
+  root.dataset.theme = theme;
+  root.dataset.themeSource = source;
+  updateThemeToggle();
+}
+
+themeToggle.addEventListener("click", () => {
+  const nextTheme = root.dataset.theme === "dark" ? "light" : "dark";
+  applyTheme(nextTheme, "saved");
+
+  try {
+    window.localStorage.setItem(themeStorageKey, nextTheme);
+  } catch (error) {
+    console.warn("Unable to save the theme preference.", error);
+  }
+});
+
+colorSchemeQuery.addEventListener("change", (event) => {
+  if (root.dataset.themeSource === "system") {
+    applyTheme(event.matches ? "dark" : "light", "system");
+  }
+});
 
 function formatTime(totalMinutes) {
   const minutesInDay = totalMinutes % (24 * 60);
@@ -358,4 +399,5 @@ document.querySelector("[data-scroll-to-map]").addEventListener("click", () => {
   document.querySelector("#map").scrollIntoView({ behavior: "smooth" });
 });
 
+updateThemeToggle();
 render();

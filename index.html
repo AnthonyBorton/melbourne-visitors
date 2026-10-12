@@ -10,10 +10,33 @@
     <title>One Fine Day — Melbourne</title>
     <script>
       (() => {
-        const param = new URLSearchParams(window.location.search).get("scoutTheme");
-        const theme =
-          param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-        document.documentElement.setAttribute("data-theme", theme);
+        const themes = new Set(["light", "dark"]);
+        const storageKey = "melbourne-theme";
+        const previewTheme = new URLSearchParams(window.location.search).get("scoutTheme");
+        let savedTheme = null;
+
+        try {
+          savedTheme = window.localStorage.getItem(storageKey);
+        } catch (error) {
+          console.warn("Unable to read the saved theme preference.", error);
+        }
+
+        const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
+        const theme = themes.has(previewTheme)
+          ? previewTheme
+          : themes.has(savedTheme)
+            ? savedTheme
+            : systemTheme;
+        const source = themes.has(previewTheme)
+          ? "preview"
+          : themes.has(savedTheme)
+            ? "saved"
+            : "system";
+
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.dataset.themeSource = source;
       })();
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -35,9 +58,20 @@
         <a href="#planner">Your day</a>
         <a href="#map">Map</a>
       </nav>
-      <button class="header-plan-button" type="button" data-scroll-to-planner>
-        Plan my day <span aria-hidden="true">↘</span>
-      </button>
+      <div class="header-actions">
+        <button class="header-plan-button" type="button" data-scroll-to-planner>
+          Plan my day <span aria-hidden="true">↘</span>
+        </button>
+        <button
+          class="theme-toggle"
+          id="theme-toggle"
+          type="button"
+          aria-label="Switch to dark theme"
+          title="Switch to dark theme"
+        >
+          <span class="theme-icon" aria-hidden="true">☾</span>
+        </button>
+      </div>
     </header>
 
     <main id="top">

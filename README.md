@@ -2,7 +2,8 @@
 
 A visually rich, interactive single-day planner for friends visiting Melbourne. Visitors can choose
 from local coffee shops, landmarks, cultural stops and food favourites, then see a timed itinerary
-and route on a stylised city map.
+and route on a stylised city map. The header theme control switches between light and dark modes,
+remembering the visitor's choice in their browser while otherwise following their system preference.
 
 ## Run locally
 

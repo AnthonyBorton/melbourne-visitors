@@ -23,6 +23,9 @@
   --cp-panel-strong: rgba(255, 255, 255, 0.96);
   --cp-sheen: rgba(255, 255, 255, 0.55);
   --cp-highlight: rgba(177, 31, 75, 0.12);
+  --cp-image-fg: #ffffff;
+  --cp-image-sheen: rgba(255, 255, 255, 0.55);
+  --cp-image-shade: #242424;
 }
 
 html[data-theme="dark"] {
@@ -97,8 +100,8 @@ img {
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   padding: 24px 4vw;
-  color: var(--cp-accent-fg);
-  border-bottom: 1px solid var(--cp-sheen);
+  color: var(--cp-image-fg);
+  border-bottom: 1px solid var(--cp-image-sheen);
 }
 
 .brand {
@@ -149,18 +152,55 @@ nav a:hover::after {
 }
 
 .header-plan-button,
-.icon-button {
+.icon-button,
+.theme-toggle {
   border: 0;
   background: transparent;
   cursor: pointer;
 }
 
-.header-plan-button {
+.header-actions {
+  display: flex;
+  align-items: center;
   justify-self: end;
+  gap: 18px;
+}
+
+.header-plan-button {
   padding: 8px 0;
-  color: var(--cp-accent-fg);
+  color: var(--cp-image-fg);
   font-size: 13px;
   border-bottom: 1px solid currentColor;
+}
+
+.theme-toggle {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  padding: 0;
+  color: var(--cp-image-fg);
+  font-size: 20px;
+  border: 1px solid var(--cp-image-sheen);
+  border-radius: 50%;
+  transition:
+    background 180ms ease,
+    transform 180ms ease;
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.14);
+  transform: translateY(-1px);
+}
+
+.theme-toggle:focus-visible,
+.header-plan-button:focus-visible {
+  outline: 2px solid var(--cp-image-fg);
+  outline-offset: 4px;
+}
+
+.theme-icon {
+  line-height: 1;
 }
 
 .hero {
@@ -169,7 +209,7 @@ nav a:hover::after {
   height: 100vh;
   max-height: 1040px;
   overflow: hidden;
-  color: var(--cp-accent-fg);
+  color: var(--cp-image-fg);
 }
 
 .hero-image,
@@ -186,8 +226,8 @@ nav a:hover::after {
 .hero-shade,
 .feature-overlay {
   background:
-    linear-gradient(90deg, color-mix(in srgb, var(--cp-text) 76%, transparent), transparent 70%),
-    linear-gradient(0deg, color-mix(in srgb, var(--cp-text) 48%, transparent), transparent 55%);
+    linear-gradient(90deg, color-mix(in srgb, var(--cp-image-shade) 76%, transparent), transparent 70%),
+    linear-gradient(0deg, color-mix(in srgb, var(--cp-image-shade) 48%, transparent), transparent 55%);
 }
 
 .hero-content {
@@ -211,6 +251,10 @@ nav a:hover::after {
 
 .eyebrow.light {
   color: var(--cp-accent-fg);
+}
+
+.hero .eyebrow.light {
+  color: var(--cp-image-fg);
 }
 
 h1,
@@ -244,7 +288,7 @@ h2 em {
 .hero-copy {
   max-width: 490px;
   margin-bottom: 34px;
-  color: var(--cp-accent-fg);
+  color: var(--cp-image-fg);
   font-size: 18px;
 }
 
@@ -285,7 +329,7 @@ h2 em {
 }
 
 .light-link {
-  color: var(--cp-accent-fg);
+  color: var(--cp-image-fg);
 }
 
 .hero-stamp {
@@ -300,7 +344,7 @@ h2 em {
   align-content: center;
   gap: 4px;
   text-align: center;
-  border: 1px solid var(--cp-sheen);
+  border: 1px solid var(--cp-image-sheen);
   border-radius: 50%;
   transform: rotate(-8deg);
 }
@@ -365,7 +409,7 @@ h2 {
   position: relative;
   min-height: 600px;
   overflow: hidden;
-  color: var(--cp-accent-fg);
+  color: var(--cp-image-fg);
 }
 
 .feature-card img,
@@ -385,7 +429,11 @@ h2 {
 }
 
 .feature-overlay {
-  background: linear-gradient(0deg, color-mix(in srgb, var(--cp-text) 72%, transparent), transparent 75%);
+  background: linear-gradient(
+    0deg,
+    color-mix(in srgb, var(--cp-image-shade) 72%, transparent),
+    transparent 75%
+  );
 }
 
 .feature-content {
@@ -1006,6 +1054,10 @@ footer p {
 @media (max-width: 720px) {
   .site-header {
     padding: 18px;
+  }
+
+  .header-actions {
+    gap: 12px;
   }
 
   .header-plan-button {
